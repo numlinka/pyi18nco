@@ -257,5 +257,15 @@ Alternatively, you can use the following structure:
 │   └── xxx.csv
 ```
 
+
+## Documentation
+
+There is no documentation because I am lazy.
+
+
+## License
+
+This project is licensed under the LGPL-3.0 License.
+
 </div>
 </div>
