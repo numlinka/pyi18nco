@@ -7,9 +7,6 @@ __license__ = "LGPL 3.0"
 __copyright__ = "Copyright (C) 2022 numlinka"
 
 # self
-from .utils import *
-from .schemas import *
-from .constants import *
 from .i18nstring import *
 from .internationalization import *
 

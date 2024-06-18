@@ -75,7 +75,7 @@ class BaseI18n (AbstractI18n):
 
     def _con_get_self_translation(self, target: TextKey) -> str:
         try:
-            result = object
+            result: object = None
             for indexed, __name in enumerate(target.split(".")):
                 result = super().__getattribute__(__name) if indexed == 0 else getattr(result, __name)
 

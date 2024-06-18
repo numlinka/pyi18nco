@@ -11,7 +11,7 @@ from .i18nbase import *
 from .components import *
 
 
-class Internationalization (BaseI18n, I18nJsonLoad, I18nCSVLoad, I18nLangLoad, I18nAutoLoad):
+class Internationalization (BaseI18n, I18nLangLoad, I18nJsonLoad, I18nCSVLoad, I18nAutoLoad):
     def con_set_first_locale(self, value: LocaleCode) -> None:
         self.con_set_locale(value)
 
@@ -29,10 +29,8 @@ class Internationalization (BaseI18n, I18nJsonLoad, I18nCSVLoad, I18nLangLoad, I
     def con_auto_set_best_locale(self) -> None:
         """
         ## Automatically set the best language
-        ## 自动设置最佳语言
 
         Adjust to the best locale code according to the system environment.
-        根据系统环境调整最佳语言码.
         """
         system_code = get_locale_code()
         available_locales = self.con_get_available_locales()
@@ -49,10 +47,8 @@ class Internationalization (BaseI18n, I18nJsonLoad, I18nCSVLoad, I18nLangLoad, I
     def con_auto_adjust_best_locale(self) -> None:
         """
         ## Automatically adjust the best language
-        ## 自动调整最佳语言
 
         Adjust to the best locale code based on current settings.
-        根据当前设置调整最佳语言码.
         """
         first_locale = self.con_get_first_locale()
         second_locale = self.con_get_second_locale()

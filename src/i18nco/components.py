@@ -13,11 +13,13 @@ from .schemas import *
 from .i18nbase import BaseI18n
 
 
-class I18nCSVLoad (object):
+class I18nComponent (object):
     def __init__(self) -> None:
         if isinstance(self, BaseI18n):
-            raise TypeError("I18nCSVLoad is not a base class")
+            raise TypeError("I18nComponent is not a base class")
 
+
+class I18nCSVLoad (I18nComponent):
     def con_load_csv_i18n(self, file_path: str, *, encoding: str = "utf-8") -> None:
         self: BaseI18n
         with open(file_path, "r", encoding=encoding) as file_object:
@@ -33,11 +35,7 @@ class I18nCSVLoad (object):
             self.con_add_translation(locale, key, value)
 
 
-class I18nJsonLoad (object):
-    def __init__(self) -> None:
-        if isinstance(self, BaseI18n):
-            raise TypeError("I18nJsonLoad is not a base class")
-
+class I18nJsonLoad (I18nComponent):
     def con_load_dict(self, dictionary: Dict[TextKey, str], locale: LocaleCode = ..., superiors: str = ...) -> None:
         self: BaseI18n
         if superiors is Ellipsis:
@@ -73,11 +71,7 @@ class I18nJsonLoad (object):
             self.con_load_dict(dictionary, locale)
 
 
-class I18nLangLoad (object):
-    def __init__(self) -> None:
-        if isinstance(self, BaseI18n):
-            raise TypeError("I18nLangLoad is not a base class")
-
+class I18nLangLoad (I18nComponent):
     def con_load_lang(self, file_path: str, locale: LocaleCode = ..., superiors: str = ...,
                       *, encoding: str = "utf-8") -> None:
         self: BaseI18n
@@ -109,7 +103,7 @@ class I18nLangLoad (object):
                         locale = value
 
                     elif define == "superiors":
-                        if not value or value == "." or value == "/":
+                        if not value or value[0] in [".", "/", "#"]:
                             superiors = ""
 
                         elif isinstance(value, str):

@@ -44,9 +44,8 @@ def decode_escape_sequences(text: str) -> str:
 def get_locale_code() -> LocaleCode:
     """
     ## get system locale code
-    ## 获取系统语言环境代码
 
-    获取失败时返回一个空字符串
+    Returns an empty string if retrieval fails.
     """
 
     ors = os.environ.get("LANG", "")
@@ -56,17 +55,8 @@ def get_locale_code() -> LocaleCode:
 def match_best_locale(target: LocaleCode, available: LocaleCodeList) -> Union[LocaleCode, None]:
     """
     ## match best locale code
-    ## 匹配最佳语言环境代码
 
-    ### Parameters
-    - target: LocaleCode
-        目标语言环境代码
-    - available: LocaleCodeList
-        可用语言环境代码列表
-
-    ### Returns
-    - LocaleCode
-        最佳语言环境代码
+    Returns None if no match is found.
     """
     if not target or not available:
         return None
@@ -95,28 +85,23 @@ def match_best_locale(target: LocaleCode, available: LocaleCodeList) -> Union[Lo
 
 class InstructionBreakdown (object):
     @staticmethod
-    def define(message: str) -> tuple[str, Union[str, list[str], None]]:
+    def define(message: str) -> tuple[str, list[str]]:
+        target = ""
+        values = []
+
         if not message.startswith("#define"):
-            return "", None
+            return target, values
 
         commands = message.split(" ")
-        if len(commands) > 2:
-            define = commands[1]
+        if len(commands) >= 2:
+            target = commands[1]
+
+        if len(commands) >= 3:
             values = commands[2:]
 
-        else:
-            define = commands[1]
-            value = None
-            return define, value
-
         values = [x for x in values if x]
-        if len(values) == 1:
-            values = values[0]
 
-        if not values:
-            values = None
-
-        return define, values
+        return target, values
 
 
 __all__ = [
