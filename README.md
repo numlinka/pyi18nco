@@ -75,66 +75,83 @@ con (control)
 
 I have tried to make `pyi18nco` support more language file formats, but their adaptability is still limited.
 
-### .lang
+### .lang File Format Specification
 
-There is no single fixed format for `.lang` files, so I made up some special syntax myself.
+Since .lang files do not have a fixed format, we have established some special syntax rules.
 
-First is the key-value pair format.
-
-```lang
-; zh_CN.lang
-
-; This is a comment.
-// This is also a comment.
-
-hello = 你好
-world = 世界
-
-mode.singleton = 单例模式
-```
-
-After preparing the .lang file, load it using `con_load_lang`.
-
-```Python
-i18n.con_load_lang("./i18n/zh_CN.lang", "zh_CN")
-```
-
-Then get the corresponding translation through the `con_translation` method,
-or directly access the property of the same name and let i18n overload it.
-
-```Python
-print(i18n.con_translation("hello"))
-print(i18n.world)
-print(i18n.mode.singleton)
-```
-
-You can pass the `superiors` argument to the `con_load_lang` method to specify default prefixes.
-
-```Python
-i18n.con_load_lang("./i18n/zh_CN.lang", "zh_CN", "text")
-
-print(i18n.text.hello)
-print(i18n.text.world)
-print(i18n.text.mode.singleton)
-```
-
-Of course you can also define all of this in your `.lang` file using `#define`.
+#### Key-Value Pair Format
 
 ```lang
-; Set the locale to zh_CN.
+; en_US.lang
+
+; This is a comment
+// This is also a comment
+
+hello = Hello
+world = World
+
+mode.singleton = Singleton Mode
+
+; Comments cannot appear after statements
+mode.singleton = Singleton Mode ; This is not a comment
+
+; If you want to preserve leading and trailing spaces, use "" to enclose the string
+separation " | "
+
+; Multiline text
+robert = I have become death \
+         the destroyer of worlds
+```
+
+#### Loading Language Files
+
+After preparing the .lang file, use `con_load_lang` to load it:
+
+```Python
+# Load the en_US.lang file and set the language to en_US
+i18n.con_load_lang("./i18n/en_US.lang", "en_US")
+
+print(i18n.con_translation("hello"))  # Output: Hello
+print(i18n.world)                     # Output: World
+print(i18n.mode.singleton)            # Output: Singleton Mode
+```
+
+Note: If you do not pass the `locale` parameter, `pyi18nco` will automatically detect the system's current language.
+
+You can pass the `superiors` parameter to the `con_load_lang` method to specify a default prefix:
+
+```Python
+# Load the en_US.lang file, set the language to en_US, and add the prefix "text"
+i18n.con_load_lang("./i18n/en_US.lang", "en_US", "text")
+
+print(i18n.text.hello)          # Output: Hello
+print(i18n.text.world)          # Output: World
+print(i18n.text.mode.singleton) # Output: Singleton Mode
+```
+
+#### Macro Definitions
+
+You can use `#define` macro definitions to set the language code and `superiors`.
+This can override the parameters passed to the `con_load_lang` method.
+
+```lang
+; Set the language code to zh_CN
 #define locale zh_CN
 
-; Clear superiors settings
+; Clear the superiors setting
 #define superiors
+#define superiors .
+#define superiors /
 
 hello = 你好
 world = 世界
 
+; Set superiors to mode
 #define superiors mode
 
-singleton = 单例模式
+singleton = Singleton Mode
 
-; Set the locale to en_US and en_GB.
+; Set the language code to en_US and en_GB
 #define locale en_US en_GB
 
 #define superiors
@@ -143,7 +160,7 @@ hello = Hello
 world = World
 ```
 
-### .json
+### .json File Format Specification
 
 Normally, we consider `.json` to be a single-language file and load it using the `con_load_json` method.
 
@@ -158,7 +175,7 @@ Normally, we consider `.json` to be a single-language file and load it using the
 i18n.con_load_json("./i18n/zh_CN.json", "zh_CN")
 ```
 
-If you want .json to be a multi-language file, you need to use the con_load_json_i18n method to load it.
+If you want `.json` to be a multi-language file, you need to use the con_load_json_i18n method to load it.
 
 ```json
 {
@@ -177,9 +194,9 @@ If you want .json to be a multi-language file, you need to use the con_load_json
 i18.con_load_json_i18n("./i18n/xxx.json")
 ```
 
-### .csv
+### .csv File Format Specification
 
-Usually we treat csv as a multilingual file and load it using `con_load_csv_i18n`.
+Usually we treat `.csv` as a multilingual file and load it using `con_load_csv_i18n`.
 
 ```csv
 locale,key,value
@@ -217,8 +234,12 @@ is one of the following:
 │       └── xxx.csv
 ```
 
-Note that in the above format, `xxx` will be passed as the default prefix when loading
-the `.lang` file. If you don't want this, use `#define` to override it in the file.
+Note: In the above format, `xxx` will be used as the default prefix when loading `.lang` files.
+If you don't want this, you can override it in the file using `#define`.
+
+### Directory Structure Example 2
+
+Alternatively, you can use the following structure:
 
 ```
 ├── i18n
