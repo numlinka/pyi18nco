@@ -1,5 +1,8 @@
-# Licensed under the LGPL 3.0 License.
-# i18nco by numlinka.
+# Licensed under the MIT License.
+# i18nco Copyright (C) 2022 numlinka.
+
+DEFAULT_ENCODING = "utf-8"
+
 
 # writing system | 文字系统
 LATIN_ALPHABET = "Latin Alphabet"
@@ -61,7 +64,7 @@ el_GR, el_GR_lang = "el_GR", "Ελληνικά (Ελλάδα)"
 el_CY, el_CY_lang = "el_CY", "Ελληνικά (Κύπρος)"
 
 # Japanese Kana | 日文假名
-ja_JP, ja_JP_lang = "ja_JP", "日本語 (日本)"
+ja_JP, ja_JP_lang = "ja_JP", "日本語"
 
 # Hangul | 韩文
 ko_KR, ko_KR_lang = "ko_KR", "한국어 (대한민국)"
@@ -132,6 +135,7 @@ ARABIC_ALPHABET_TABLE = {
     fa_IR: fa_IR_lang,
     ur_PK: ur_PK_lang,
 }
+
 DEVANAGARI_ALPHABET_TABLE = {
     hi_IN: hi_IN_lang,
     ne_NP: ne_NP_lang,

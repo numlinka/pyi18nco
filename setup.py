@@ -1,5 +1,5 @@
-# Licensed under the LGPL 3.0 License.
-# i18nco by numlinka.
+# Licensed under the MIT License.
+# i18nco Copyright (C) 2022 numlinka.
 # setup
 
 # site
@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name = "i18nco",
-    version = "1.2.2",
+    version = "1.3.0",
     description = "This is a simple and easy to use Python i18n library.",
     long_description = open("README_PyPI.md", "r", encoding="utf-8").read(),
     long_description_content_type = "text/markdown",
@@ -18,7 +18,7 @@ setup(
     package_dir={"": "src"},
     packages = ["i18nco"],
     classifiers=[
-        "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+        "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
     ],
     license = "LGPLv3",

@@ -1,21 +1,19 @@
-# Licensed under the LGPL 3.0 License.
-# i18nco by numlinka.
+# Licensed under the MIT License.
+# i18nco Copyright (C) 2022 numlinka.
+
+__all__ = [
+    "Internationalization",
+    "I18nString",
+    "I18nControl"
+]
 
 __name__ = "internationalization"
 __author__ = "numlinka"
-__license__ = "LGPL 3.0"
+__license__ = "MIT"
 __copyright__ = "Copyright (C) 2022 numlinka"
-
-# self
-from .i18nstring import *
-from .internationalization import *
-
-
-__version_info__ = (1, 2, 2)
+__version_info__ = (1, 3, 0)
 __version__ = ".".join(map(str, __version_info__))
 
-
-__all__ = [
-    "I18nString",
-    "Internationalization"
-]
+# internal
+from .internationalization import Internationalization, I18nString
+from .i18ncontrol import I18nControl
