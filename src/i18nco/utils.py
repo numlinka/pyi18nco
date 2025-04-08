@@ -16,8 +16,8 @@ import locale
 from typing import List, Optional
 
 # self
-from .typeins import *
-from .constants import en_US, WRITING_SYSTEM_TABLE
+from .typeins import LocaleCode
+from .constants import en_US, WRITING_SYSTEM_TABLE, UNITED_NATIONS_LANGUAGE_LIST
 
 
 ESCAPE_SEQUENCE_RE = re.compile("\\\\(u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8}|x[0-9A-Fa-f]{2}|.)")
@@ -127,7 +127,7 @@ def match_best_locale(target: LocaleCode, available: List[LocaleCode]) -> Option
         raise TypeError(
             f"Expected `target` to be of type `LocaleCode`, but got {type(target)}.")
 
-    if not isinstance(available, list) or not all(isinstance(locale, LocaleCode) for locale in available):
+    if not isinstance(available, (list, tuple)) or not all(isinstance(locale, LocaleCode) for locale in available):
         raise TypeError(
             f"Expected `available` to be a `list` of `LocaleCode`, but got {type(available)}.")
 
@@ -145,6 +145,11 @@ def match_best_locale(target: LocaleCode, available: List[LocaleCode]) -> Option
 
         for locale_code in table:
             if locale_code in available:
+                return locale_code
+
+    for language_code in UNITED_NATIONS_LANGUAGE_LIST:
+        for locale_code in available:
+            if locale_code.startswith(language_code):
                 return locale_code
 
     return None

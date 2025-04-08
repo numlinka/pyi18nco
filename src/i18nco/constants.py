@@ -218,5 +218,7 @@ WRITING_SYSTEM_TABLE = {
     ETHIOPIC_OR_GE_EZ_SCRIPT: ETHIOPIC_OR_GE_EZ_SCRIPT_TABLE,
 }
 
+UNITED_NATIONS_LANGUAGE_LIST = ("en", "fr", "es", "zh", "ru")
+
 
 __all__ = [x for x in globals() if not x.startswith("_")]
