@@ -2,9 +2,8 @@
 # i18nco Copyright (C) 2022 numlinka.
 
 __all__ = [
-    "Internationalization",
     "I18nString",
-    "I18nControl"
+    "Internationalization"
 ]
 
 __name__ = "internationalization"
@@ -15,5 +14,5 @@ __version_info__ = (1, 3, 0)
 __version__ = ".".join(map(str, __version_info__))
 
 # internal
-from .internationalization import Internationalization, I18nString
-from .i18ncontrol import I18nControl
+from .internationalization import I18nString, Internationalization
+from . import utils
