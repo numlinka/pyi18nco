@@ -10,7 +10,7 @@ __name__ = "internationalization"
 __author__ = "numlinka"
 __license__ = "MIT"
 __copyright__ = "Copyright (C) 2022 numlinka"
-__version_info__ = (1, 3, 0)
+__version_info__ = (1, 4, 0)
 __version__ = ".".join(map(str, __version_info__))
 
 # internal

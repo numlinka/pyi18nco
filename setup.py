@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name = "i18nco",
-    version = "1.3.0",
+    version = "1.4.0",
     description = "This is a simple and easy to use Python i18n library.",
     long_description = open("README_PyPI.md", "r", encoding="utf-8").read(),
     long_description_content_type = "text/markdown",
