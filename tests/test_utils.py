@@ -6,6 +6,7 @@ import unittest
 
 # tests
 import i18nco.utils
+from i18nco.constants import *
 
 
 class TestUtils (unittest.TestCase):
@@ -26,3 +27,10 @@ class TestUtils (unittest.TestCase):
     def test_get_locale_code(self) -> None:
         alt = i18nco.utils.get_locale_code
         self.assertTrue(alt())
+
+    def test_match_best_locale(self) -> None:
+        alt = i18nco.utils.match_best_locale
+        self.assertEqual(alt(en_US, [en_US, en_GB]), en_US)
+        self.assertEqual(alt(en_US, [en_GB, en_US]), en_US)
+        self.assertEqual(alt(en_US, [en_GB, ru_RU]), en_GB)
+        self.assertEqual(alt(en_US, [zh_CN, ru_RU]), None)

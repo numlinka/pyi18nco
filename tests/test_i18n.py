@@ -13,13 +13,31 @@ class TestUtils (unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.i18n = i18nco.Internationalization()
-        self.i18n_ctrl = i18nco.I18nControl(self.i18n)
 
-    def test_access(self) -> None:
-        self.i18n.ctrl_set_translation(None, "a.b", "access")
-        self.assertEqual(self.i18n.a.b, "access")
+    def test_set_locale(self) -> None:
+        self.i18n.ctrl.set_locale(zh_CN, en_US)
+        self.assertEqual(self.i18n.ctrl.first_locale, zh_CN)
+        self.assertEqual(self.i18n.ctrl.second_locale, en_US)
 
-    def test_fa(self) -> None:
-        self.i18n.ctrl_set_translation(zh_CN, "ta1", "zh_CN-ta1")
-        self.i18n.ctrl_set_locale(second_language=zh_CN)
-        self.assertEqual(self.i18n.ta1, "zh_CN-ta1")
+    def test_set_locale_auto_adjust(self) -> None:
+        self.i18n.ctrl.set_translation(zh_CN, zh_CN, zh_CN_lang)
+        self.i18n.ctrl.set_translation(zh_HK, zh_HK, zh_HK_lang)
+        self.i18n.ctrl.set_locale(zh_CN)
+        self.assertEqual(self.i18n.ctrl.second_locale, zh_HK)
+
+    def test_set_translation(self) -> None:
+        self.i18n.ctrl.set_translation(zh_CN, "lang_name", zh_CN_lang)
+        self.i18n.ctrl.set_translation(en_US, "lang_name", en_US_lang)
+        self.assertEqual(self.i18n.ctrl.translation("lang_name", zh_CN), zh_CN_lang)
+        self.assertEqual(self.i18n.ctrl.translation("lang_name", en_US), en_US_lang)
+
+    def test_set_translation_more(self) -> None:
+        self.i18n.ctrl.set_translation([en_US, en_GB], "more_lang", "more lang")
+        self.assertEqual(self.i18n.ctrl.translation("more_lang", en_US), "more lang")
+        self.assertEqual(self.i18n.ctrl.translation("more_lang", en_GB), "more lang")
+
+    def test_attribute_overload(self) -> None:
+        self.assertEqual(self.i18n.attribute.overload, "attribute.overload")
+        self.i18n.ctrl.set_translation(zh_CN, "attribute.overload", "属性重载")
+        self.i18n.ctrl.set_locale(zh_CN)
+        self.assertEqual(self.i18n.attribute.overload, "属性重载")
